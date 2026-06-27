@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v4.3.1
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v4.3.1
         with:
           global-json-file: global.json
       - run: dotnet restore VpnMediator.Tests/VpnMediator.Tests.csproj
@@ -87,7 +87,7 @@ jobs:
           python-version: "3.11"
           cache: pip
           cache-dependency-path: VpnAccessBot/requirements.lock
-      - uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v4.3.1
+      - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v4.3.1
         with:
           global-json-file: global.json
       - run: sudo apt-get update && sudo apt-get install -y shellcheck sqlite3
