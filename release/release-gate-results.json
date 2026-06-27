@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Baseline archive provenance",
+    "command": "sha256sum source archives",
+    "status": "PASS",
+    "summary": "Original baseline SHA-256 is 106945b55e1fea3326db02eeef1f7c6be4b3463b526178eeace5af5307a7ca15; prior reviewed simplified archive SHA-256 is e963a5299dacaef4f2467eef3bc05728fce913559ffd8e0abb185595e17d56f0."
+  },
+  {
+    "name": "Offline C# source type-check",
+    "command": "dotnet Roslyn csc with net10 reference packs and temporary package API signatures",
+    "status": "PASS",
+    "summary": "Production and test C# sources type-check without compiler errors; this does not execute tests or validate Microsoft.Data.Sqlite runtime behavior."
+  },
+  {
+    "name": "Python lock integrity",
+    "command": "python3 scripts/verify-python-lock.py",
+    "status": "PASS",
+    "summary": "63 runtime/build packages are exactly pinned with hashes."
+  },
+  {
+    "name": "Static source validation",
+    "command": "compileall; json.tool; bash -n",
+    "status": "PASS",
+    "summary": "Python syntax, JSON parsing and shell syntax passed."
+  },
+  {
+    "name": "Repository guards",
+    "command": "architecture-guard; deployment-guard; branding; secret-scan; updater-self-test",
+    "status": "PASS",
+    "summary": "All available architecture, deployment, branding, secret and updater guards passed."
+  },
+  {
+    "name": "VpnAccessBot regression and lint suite",
+    "command": "pytest; ruff; pip-audit",
+    "status": "FAIL",
+    "summary": "Locked packages cannot be downloaded: PyPI and mirrors return HTTP 403 through the environment proxy."
+  },
+  {
+    "name": ".NET build and regression suite",
+    "command": "dotnet restore/build/test/list package",
+    "status": "FAIL",
+    "summary": ".NET SDK 10.0.301 is installed and matches global.json, but NuGet restore is blocked by HTTP 403 from api.nuget.org through the environment proxy; build, tests and advisory lookup therefore did not run."
+  },
+  {
+    "name": "ShellCheck and backup/restore self-test",
+    "command": "shellcheck; scripts/backup-restore-self-test.sh",
+    "status": "FAIL",
+    "summary": "shellcheck and sqlite3 CLI are absent and cannot be installed from blocked repositories."
+  },
+  {
+    "name": "Production integrations and canary",
+    "command": "Telegram Stars, Happ, upstream, DNS/TLS, systemd, backup/restore and rollback canary",
+    "status": "SKIPPED_EXTERNAL",
+    "summary": "Requires the target host and real external providers."
+  }
+]

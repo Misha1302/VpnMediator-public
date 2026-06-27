@@ -1,0 +1,338 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "name": "Razaltush VPN services"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "aiofiles",
+      "version": "25.1.0"
+    },
+    {
+      "type": "library",
+      "name": "aiogram",
+      "version": "3.29.0"
+    },
+    {
+      "type": "library",
+      "name": "aiohappyeyeballs",
+      "version": "2.6.2"
+    },
+    {
+      "type": "library",
+      "name": "aiohttp",
+      "version": "3.14.1"
+    },
+    {
+      "type": "library",
+      "name": "aiohttp-socks",
+      "version": "0.10.2"
+    },
+    {
+      "type": "library",
+      "name": "aiosignal",
+      "version": "1.4.0"
+    },
+    {
+      "type": "library",
+      "name": "aiosqlite",
+      "version": "0.22.1"
+    },
+    {
+      "type": "library",
+      "name": "annotated-types",
+      "version": "0.7.0"
+    },
+    {
+      "type": "library",
+      "name": "anyio",
+      "version": "4.13.0"
+    },
+    {
+      "type": "library",
+      "name": "attrs",
+      "version": "26.1.0"
+    },
+    {
+      "type": "library",
+      "name": "boolean-py",
+      "version": "5.0"
+    },
+    {
+      "type": "library",
+      "name": "cachecontrol",
+      "version": "0.14.4"
+    },
+    {
+      "type": "library",
+      "name": "certifi",
+      "version": "2026.5.20"
+    },
+    {
+      "type": "library",
+      "name": "charset-normalizer",
+      "version": "3.4.7"
+    },
+    {
+      "type": "library",
+      "name": "colorama",
+      "version": "0.4.6"
+    },
+    {
+      "type": "library",
+      "name": "cyclonedx-python-lib",
+      "version": "11.9.0"
+    },
+    {
+      "type": "library",
+      "name": "defusedxml",
+      "version": "0.7.1"
+    },
+    {
+      "type": "library",
+      "name": "filelock",
+      "version": "3.29.1"
+    },
+    {
+      "type": "library",
+      "name": "frozenlist",
+      "version": "1.8.0"
+    },
+    {
+      "type": "library",
+      "name": "greenlet",
+      "version": "3.5.1"
+    },
+    {
+      "type": "library",
+      "name": "h11",
+      "version": "0.16.0"
+    },
+    {
+      "type": "library",
+      "name": "httpcore",
+      "version": "1.0.9"
+    },
+    {
+      "type": "library",
+      "name": "httpx",
+      "version": "0.28.1"
+    },
+    {
+      "type": "library",
+      "name": "idna",
+      "version": "3.18"
+    },
+    {
+      "type": "library",
+      "name": "iniconfig",
+      "version": "2.3.0"
+    },
+    {
+      "type": "library",
+      "name": "license-expression",
+      "version": "30.4.4"
+    },
+    {
+      "type": "library",
+      "name": "magic-filter",
+      "version": "1.0.12"
+    },
+    {
+      "type": "library",
+      "name": "markdown-it-py",
+      "version": "4.2.0"
+    },
+    {
+      "type": "library",
+      "name": "mdurl",
+      "version": "0.1.2"
+    },
+    {
+      "type": "library",
+      "name": "Microsoft.Data.Sqlite",
+      "version": "10.0.0"
+    },
+    {
+      "type": "library",
+      "name": "Microsoft.NET.Test.Sdk",
+      "version": "18.0.1"
+    },
+    {
+      "type": "library",
+      "name": "msgpack",
+      "version": "1.1.2"
+    },
+    {
+      "type": "library",
+      "name": "multidict",
+      "version": "6.7.1"
+    },
+    {
+      "type": "library",
+      "name": "packageurl-python",
+      "version": "0.17.6"
+    },
+    {
+      "type": "library",
+      "name": "packaging",
+      "version": "26.2"
+    },
+    {
+      "type": "library",
+      "name": "pip",
+      "version": "26.1.2"
+    },
+    {
+      "type": "library",
+      "name": "pip-api",
+      "version": "0.0.34"
+    },
+    {
+      "type": "library",
+      "name": "pip-audit",
+      "version": "2.10.0"
+    },
+    {
+      "type": "library",
+      "name": "pip-requirements-parser",
+      "version": "32.0.1"
+    },
+    {
+      "type": "library",
+      "name": "platformdirs",
+      "version": "4.10.0"
+    },
+    {
+      "type": "library",
+      "name": "pluggy",
+      "version": "1.6.0"
+    },
+    {
+      "type": "library",
+      "name": "propcache",
+      "version": "0.5.2"
+    },
+    {
+      "type": "library",
+      "name": "py-serializable",
+      "version": "2.1.0"
+    },
+    {
+      "type": "library",
+      "name": "pydantic",
+      "version": "2.13.4"
+    },
+    {
+      "type": "library",
+      "name": "pydantic-core",
+      "version": "2.46.4"
+    },
+    {
+      "type": "library",
+      "name": "pydantic-settings",
+      "version": "2.14.1"
+    },
+    {
+      "type": "library",
+      "name": "pygments",
+      "version": "2.20.0"
+    },
+    {
+      "type": "library",
+      "name": "pyparsing",
+      "version": "3.3.2"
+    },
+    {
+      "type": "library",
+      "name": "pytest",
+      "version": "9.0.3"
+    },
+    {
+      "type": "library",
+      "name": "pytest-asyncio",
+      "version": "1.4.0"
+    },
+    {
+      "type": "library",
+      "name": "python-dotenv",
+      "version": "1.2.2"
+    },
+    {
+      "type": "library",
+      "name": "python-socks",
+      "version": "2.8.1"
+    },
+    {
+      "type": "library",
+      "name": "requests",
+      "version": "2.34.2"
+    },
+    {
+      "type": "library",
+      "name": "rich",
+      "version": "15.0.0"
+    },
+    {
+      "type": "library",
+      "name": "ruff",
+      "version": "0.15.16"
+    },
+    {
+      "type": "library",
+      "name": "sortedcontainers",
+      "version": "2.4.0"
+    },
+    {
+      "type": "library",
+      "name": "sqlalchemy",
+      "version": "2.0.50"
+    },
+    {
+      "type": "library",
+      "name": "tomli",
+      "version": "2.4.1"
+    },
+    {
+      "type": "library",
+      "name": "tomli-w",
+      "version": "1.2.0"
+    },
+    {
+      "type": "library",
+      "name": "typing-extensions",
+      "version": "4.15.0"
+    },
+    {
+      "type": "library",
+      "name": "typing-inspection",
+      "version": "0.4.2"
+    },
+    {
+      "type": "library",
+      "name": "urllib3",
+      "version": "2.7.0"
+    },
+    {
+      "type": "library",
+      "name": "xunit",
+      "version": "2.9.3"
+    },
+    {
+      "type": "library",
+      "name": "xunit.runner.visualstudio",
+      "version": "3.1.5"
+    },
+    {
+      "type": "library",
+      "name": "yarl",
+      "version": "1.24.2"
+    }
+  ]
+}

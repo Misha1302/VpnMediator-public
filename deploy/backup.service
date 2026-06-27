@@ -1,0 +1,14 @@
+[Unit]
+Description=Razaltush VPN verified two-database SQLite backup
+After=local-fs.target
+
+[Service]
+Type=oneshot
+User=root
+EnvironmentFile=-/etc/vpn-backup.env
+ExecStart=/usr/local/libexec/vpn-backup.sh
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/backups/vpn

@@ -1,0 +1,94 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: VpnAccessBot
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: VpnAccessBot/requirements.lock
+      - run: ../scripts/verify-python-lock.py
+      - run: python -m pip install --require-hashes -r requirements.lock
+      - run: python -m pip install --no-deps -e .
+      - run: python -m compileall vpn_access_bot
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: python -m pytest
+      - run: pip-audit
+      - run: ../scripts/architecture-guard.sh
+      - run: ruff check --config pyproject.toml ../scripts
+      - run: ruff format --check --config pyproject.toml ../scripts
+
+  dotnet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v4.3.1
+        with:
+          global-json-file: global.json
+      - run: dotnet restore VpnMediator.Tests/VpnMediator.Tests.csproj
+      - run: dotnet build VpnMediator.Tests/VpnMediator.Tests.csproj --configuration Release --no-restore -warnaserror
+      - run: dotnet test VpnMediator.Tests/VpnMediator.Tests.csproj --configuration Release --no-build --no-restore
+      - run: dotnet list VpnMediator.Tests/VpnMediator.Tests.csproj package --vulnerable --include-transitive
+
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck sqlite3
+      - name: Check shell syntax
+        run: |
+          find . -type f -name '*.sh' \
+            -not -path './.git/*' \
+            -not -path './VpnAccessBot/.venv/*' \
+            -print0 | xargs -0 -r -n1 bash -n
+      - name: Run ShellCheck
+        run: |
+          find . -type f -name '*.sh' \
+            -not -path './.git/*' \
+            -not -path './VpnAccessBot/.venv/*' \
+            -print0 | xargs -0 -r shellcheck
+      - name: Run updater self-test
+        run: ./scripts/updater-self-test.sh
+
+  supply-chain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.11"
+      - run: ./scripts/secret-scan.sh
+      - run: ./scripts/deployment-guard.sh
+      - run: python scripts/generate-sbom.py
+      - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
+        with:
+          name: sbom
+          path: release/sbom.cdx.json
+
+
+  release-gate:
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: VpnAccessBot/requirements.lock
+      - uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v4.3.1
+        with:
+          global-json-file: global.json
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck sqlite3
+      - run: ./scripts/validate-release.sh

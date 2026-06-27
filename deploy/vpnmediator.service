@@ -1,0 +1,36 @@
+[Unit]
+Description=VPN Mediator
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=vpn-mediator
+Group=vpn-mediator
+WorkingDirectory=/opt/vpn-mediator/current
+EnvironmentFile=/etc/vpn-mediator/mediator.env
+ExecStart=/usr/bin/dotnet /opt/vpn-mediator/current/VpnMediator.dll
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+StateDirectory=vpn-mediator
+StateDirectoryMode=0700
+LogsDirectory=vpn-mediator
+LogsDirectoryMode=0750
+UMask=0077
+TimeoutStopSec=30
+ReadWritePaths=/var/lib/vpn-mediator /var/log/vpn-mediator
+
+[Install]
+WantedBy=multi-user.target
+Alias=vpn-mediator.service

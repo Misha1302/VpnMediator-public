@@ -1,0 +1,7 @@
+generated_at_utc=2026-06-20T20:57:11Z
+input_archive_filename=01-VpnMediator-ea428d9.tar.gz
+input_archive_sha256=106945b55e1fea3326db02eeef1f7c6be4b3463b526178eeace5af5307a7ca15
+bot_schema_version=33
+mediator_schema_version=24
+gate_count=8
+gate_statuses=PASS,PASS,PASS,PASS,FAIL,FAIL,FAIL,SKIPPED_EXTERNAL

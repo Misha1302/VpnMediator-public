@@ -1,0 +1,64 @@
+# This directive belongs in the nginx http {} block.
+limit_req_zone $binary_remote_addr zone=vpn_legacy_connect:10m rate=15r/m;
+
+server {
+    listen 443 ssl http2;
+    server_name vpn.example;
+
+    # TLS certificate directives are deployment-specific.
+    # ssl_certificate /etc/letsencrypt/live/vpn.example/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/vpn.example/privkey.pem;
+
+    location /sub/ {
+        # Do not apply an IP-only limiter here: mobile/CGNAT customers commonly share one
+        # public address. The application partitions subscription traffic by a hash of the
+        # signed subscription identity and retains a separate coarse global IP safety limit.
+        # Subscription URLs contain query-string bearer secrets. Do not log them.
+        access_log off;
+        proxy_no_cache 1;
+        proxy_cache_bypass 1;
+        proxy_pass http://127.0.0.1:5062;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Correlation-ID $request_id;
+    }
+
+    # Compatibility tombstone for previously sent browser handoff links.
+    # The application always returns 410 Gone and never creates or changes credentials.
+    location /connect/ {
+        limit_req zone=vpn_legacy_connect burst=5 nodelay;
+        access_log off;
+        proxy_no_cache 1;
+        proxy_cache_bypass 1;
+        proxy_pass http://127.0.0.1:5062;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Correlation-ID $request_id;
+    }
+
+    location = /health/live {
+        proxy_pass http://127.0.0.1:5062;
+        proxy_set_header X-Correlation-ID $request_id;
+        access_log /var/log/nginx/vpn-mediator-health.log combined;
+    }
+
+    location ^~ /internal/ {
+        return 404;
+    }
+
+    location = /health/ready {
+        proxy_pass http://127.0.0.1:5062;
+        proxy_set_header X-Correlation-ID $request_id;
+        access_log /var/log/nginx/vpn-mediator-health.log combined;
+    }
+
+    location /admin/ {
+        return 404;
+    }
+
+    location / {
+        return 404;
+    }
+}

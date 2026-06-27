@@ -1,0 +1,36 @@
+[Unit]
+Description=VPN Access Telegram Bot
+After=network-online.target vpnmediator.service
+Wants=network-online.target
+Requires=vpnmediator.service
+
+[Service]
+Type=simple
+User=vpn-access-bot
+Group=vpn-access-bot
+WorkingDirectory=/opt/vpn-access-bot/current
+EnvironmentFile=/etc/vpn-access-bot/bot.env
+ExecStart=/opt/vpn-access-bot/current/.venv/bin/python -m vpn_access_bot.main
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+StateDirectory=vpn-access-bot
+StateDirectoryMode=0700
+LogsDirectory=vpn-access-bot
+LogsDirectoryMode=0750
+UMask=0077
+TimeoutStopSec=30
+ReadWritePaths=/var/lib/vpn-access-bot /var/log/vpn-access-bot
+
+[Install]
+WantedBy=multi-user.target
